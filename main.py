@@ -1,8 +1,15 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory
 import os
 import json
+import subprocess
 
 app = Flask(__name__)
+
+
+def stats():
+    proc = subprocess.Popen(["sudo " + monPath], stdout=subprocess.PIPE, shell=True)
+    (out, err) = proc.communicate()
+    return out
 
 
 @app.route("/")
@@ -12,19 +19,13 @@ def main_page():
 
 @app.route("/status", methods=['GET'])
 def step():
-    import subprocess
-
-    proc = subprocess.Popen(["sudo " + monPath], stdout=subprocess.PIPE, shell=True)
-    (out, err) = proc.communicate()
-    print("program output:", out)
-
-    return render_template('info.html', data=out)
+    info = stats()
+    return json.loads('{cputemp: ' + info[1] + ', usage: ' + info[2] + '}')
 
 
-@app.route("/reset", methods=['POST'])
+@app.route("/info")
 def reset_data():
-    print("Done!")
-    return redirect(url_for('supervise'))
+    return render_template('info.html', data=stats())
 
 
 # @app.route('/favicon.ico')
@@ -44,7 +45,7 @@ if __name__ == "__main__":
             f.write("tmp=\"${date};${temp};${usage}\"\n")
             f.write("echo $tmp")
 
-	os.system("chmod +x " + monPath)
+        os.system("chmod +x " + monPath)
 
     app.static_folder = 'static'
     app.run('0.0.0.0', port=15050)
