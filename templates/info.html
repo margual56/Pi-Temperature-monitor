@@ -5,6 +5,27 @@
     <title>Info</title>
 </head>
 <body>
-{{ data }}
+<table>
+    <thead>
+        <tr>
+            <!--{% for key, values in dict.items() %}
+            <th>{{ key }}</th>
+            {% endfor %}-->
+            <th>Date</th>
+            <th>Hour</th>
+            <th>Temperature</th>
+            <th>CPU usage %</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for values in data.split(";")%}
+        <tr>
+            {% for value in values %}
+            <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>
