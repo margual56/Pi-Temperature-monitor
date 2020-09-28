@@ -18,7 +18,7 @@ def step():
     (out, err) = proc.communicate()
     print("program output:", out)
 
-    return out
+    return render_template('info.html', data=out)
 
 
 @app.route("/reset", methods=['POST'])
