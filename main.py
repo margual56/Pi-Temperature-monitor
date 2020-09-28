@@ -14,7 +14,7 @@ def main_page():
 def step():
     import subprocess
 
-    proc = subprocess.Popen([monPath], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(["sudo " + monPath], stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     print("program output:", out)
 
@@ -41,8 +41,10 @@ if __name__ == "__main__":
             f.write("date=$(date '+%d/%m/%Y %H:%M:%S')\n")
             f.write("temp=$(vcgencmd measure_temp | egrep -o '[0-9]*\\.[0-9]*')\n")
             f.write("usage=$(top -bn 1 | head -n 3 | tail -n 1 | awk '{print 100-$8}')\n")
-            f.write("tmp='${date};${temp};${usage}'\n")
+            f.write("tmp=\"${date};${temp};${usage}\"\n")
             f.write("echo $tmp")
+
+	os.system("chmod +x " + monPath)
 
     app.static_folder = 'static'
     app.run('0.0.0.0', port=15050)
