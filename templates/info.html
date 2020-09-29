@@ -3,27 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Info</title>
+
+    <style>
+	body {
+        background: #242424;
+        color: white;
+        font-family: consolas;
+
+    }
+
+    table {
+        border: 3px solid #aaaaaa;
+        border-collapse: collapse;
+        margin-left: auto;
+        margin-right: auto;
+		margin-top: 5%;
+		margin-bottom: 50px;
+    }
+
+    tr>td {
+        background: black;
+    }
+
+    th, td {
+        border: 1px solid white;
+    }
+
+	th {padding: 10px 30px;}
+	td {padding: 5px 15px;}
+
+    tr>td:hover {
+        background-color: #593763;
+    }
+    </style>
 </head>
 <body>
 <table>
     <thead>
         <tr>
             <th>Date/time</th>
-            <th>Temperature</th>
+            <th>Temperature ºC</th>
             <th>CPU usage %</th>
         </tr>
     </thead>
     <tbody>
 	<tr>
-<<<<<<< Updated upstream
-	{% for value in data.split(";")%}
-=======
 		{% for value in data.split(";")%}
->>>>>>> Stashed changes
         	<td>{{ value }}</td>
         {% endfor %}
 	</tr>
     </tbody>
 </table>
+
+<img src="{{ plot }}" alt="Plotted temperatures">
 </body>
 </html>

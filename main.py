@@ -2,6 +2,8 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 import os
 import json
 import subprocess
+from Plotter import Plotter
+
 
 app = Flask(__name__)
 
@@ -9,6 +11,10 @@ app = Flask(__name__)
 def stats():
     proc = subprocess.Popen(["sudo " + monPath], stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
+
+    with open(logPath, 'a') as f:
+        f.write(str(out) + "\n")
+
     return out
 
 
@@ -25,8 +31,11 @@ def step():
 
 @app.route("/info")
 def reset_data():
-    return render_template('info.html', data=stats())
+    plotter.do_plot()
 
+    plotter.save(name="temps", format_="jpg")
+
+    return render_template('info.html', data=stats(), plot="temps.jpg")
 
 # @app.route('/favicon.ico')
 # def favicon():
@@ -34,6 +43,7 @@ def reset_data():
 
 
 if __name__ == "__main__":
+    logPath = '~/MarcosDrive/.temps_log/.temp.log'
     # monPath = os.path.join(app.root_path, 'static', "monitor.sh")
     monPath = "./monitor.sh"
     if not os.path.exists(monPath):
@@ -46,6 +56,8 @@ if __name__ == "__main__":
             f.write("echo $tmp")
 
         os.system("chmod +x " + monPath)
+
+    plotter = Plotter(log_file=logPath)
 
     app.static_folder = 'static'
     app.run('0.0.0.0', port=15050)
