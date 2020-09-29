@@ -19,9 +19,9 @@ class Plotter:
     def do_plot(self):
         with open(self.log_file, 'r') as f:
             for line in f.readlines():
-                spl = line.replace("\\n", "").split(";")
+                spl = line.split(";")
 
-                date = spl[0]
+                date = datetime.strptime(spl[0], '%d/%m/%Y %H:%M:%S')
 
                 self.dates.append(date)
                 self.temps.append(float(spl[1]))
