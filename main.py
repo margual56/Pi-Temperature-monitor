@@ -1,3 +1,5 @@
+# coding=<UTF-8>
+
 from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory, jsonify
 import os
 import json

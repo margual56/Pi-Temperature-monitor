@@ -1,3 +1,5 @@
+# coding=<UTF-8>
+
 import matplotlib.pyplot as plt
 from datetime import datetime
 import os
@@ -30,7 +32,7 @@ class Plotter:
         color = 'tab:red'
         self.ax1.set_xlabel('Datetime')
 
-        self.ax1.set_ylabel('Temp in ºC', color=color)
+        self.ax1.set_ylabel('Temp in C', color=color)
         self.ax1.plot(self.dates, self.temps, color=color)
         self.ax1.tick_params(axis='y', labelcolor=color)
 
