@@ -32,12 +32,14 @@ def step():
 
 
 @app.route("/info")
-def reset_data():
+def print_data():
+    output = stats()
+
     plotter.do_plot()
 
     plotter.save(name="temps", format_="jpg")
 
-    return render_template('info.html', data=stats(), plot="temps.jpg")
+    return render_template('info.html', data=output, plot="temps.jpg")
 
 # @app.route('/favicon.ico')
 # def favicon():
