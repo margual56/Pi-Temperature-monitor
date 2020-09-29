@@ -14,7 +14,7 @@ def stats():
     (out, err) = proc.communicate()
 
     with open(logPath, 'a') as f:
-        f.write(str(out) + "\n")
+        f.write(out.decode("utf-8") + "\n")
 
     return out
 
@@ -26,7 +26,7 @@ def main_page():
 
 @app.route("/status", methods=['GET'])
 def step():
-    info = stats().split(";")
+    info = stats().split(b';')
     return jsonify({"cputemp": float(info[1]), "usage": float(info[2])})
 
 
