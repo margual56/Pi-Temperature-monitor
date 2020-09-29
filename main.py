@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory
+from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory, jsonify
 import os
 import json
 import subprocess
@@ -19,8 +19,8 @@ def main_page():
 
 @app.route("/status", methods=['GET'])
 def step():
-    info = stats()
-    return json.loads('{cputemp: ' + info[1] + ', usage: ' + info[2] + '}')
+    info = stats().split(";")
+    return jsonify({"cputemp": float(info[1]), "usage": float(info[2])})
 
 
 @app.route("/info")
