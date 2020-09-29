@@ -2,7 +2,6 @@
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for, send_from_directory, jsonify
 import os
-import json
 import subprocess
 from Plotter import Plotter
 

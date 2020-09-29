@@ -21,7 +21,7 @@ class Plotter:
             for line in f.readlines():
                 spl = line.split(";")
 
-                date = datetime.strptime(str(spl[0]), '%d/%m/%Y %H:%M:%S')
+                date = datetime.strptime(spl[0], '%d/%m/%Y %H:%M:%S')
 
                 self.dates.append(date)
                 self.temps.append(float(spl[1]))
