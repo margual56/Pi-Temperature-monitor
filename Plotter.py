@@ -10,11 +10,14 @@ class Plotter:
     temps = []
     usage = []
     max_val = 100
+    log_file = ""
 
     def __init__(self, log_file=".temp.log"):
         plt.style.use('seaborn-whitegrid')
+        self.log_file = log_file
 
-        with open(log_file, 'r') as f:
+    def do_plot(self):
+        with open(self.log_file, 'r') as f:
             for line in f.readlines():
                 spl = line.split(";")
 
@@ -26,7 +29,6 @@ class Plotter:
 
                 self.max_val = max(max(self.temps), max(self.usage))
 
-    def do_plot(self):
         self.fig, self.ax1 = plt.subplots()
 
         color = 'tab:red'

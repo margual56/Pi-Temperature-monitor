@@ -47,7 +47,7 @@ def print_data():
 
 
 if __name__ == "__main__":
-    logPath = '~/MarcosDrive/.temps_log/.temp.log'
+    logPath = '.temp.log'
     # monPath = os.path.join(app.root_path, 'static', "monitor.sh")
     monPath = "./monitor.sh"
     if not os.path.exists(monPath):
