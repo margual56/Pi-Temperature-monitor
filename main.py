@@ -9,14 +9,11 @@ app = Flask(__name__)
 
 def stats():
     memory = psutil.virtual_memory()
-    # Divide from Bytes -> KB -> MB
-    available = round(memory.available / 1024.0 / 1024.0, 1)
-    total = round(memory.total/1024.0/1024.0, 1)
 
     res = os.popen('vcgencmd measure_temp').readline()
     temp = res.replace("temp=", "").replace("'C\n", "")
 
-    return float(psutil.cpu_percent()), float(temp), float(available-total)
+    return float(psutil.cpu_percent()), float(temp), float(memory.percent)
 
 
 @app.route("/")
